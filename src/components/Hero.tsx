@@ -9,6 +9,7 @@ import { gsap } from "gsap";
 
 export default function Hero({ scrollToSection }: { scrollToSection: (id: string) => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const bgRef = useRef<HTMLImageElement>(null);
   const tagRef = useRef<HTMLDivElement>(null);
   const title1Ref = useRef<HTMLSpanElement>(null);
   const title2Ref = useRef<HTMLSpanElement>(null);
@@ -20,18 +21,27 @@ export default function Hero({ scrollToSection }: { scrollToSection: (id: string
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
+      // Visual backdrop reveal
+      tl.fromTo(
+        bgRef.current,
+        { scale: 1.15, opacity: 0 },
+        { scale: 1, opacity: 0.6, duration: 1.8, ease: "power3.out" },
+        "0"
+      );
+
       // Cinematic entrance animations on page load
       tl.fromTo(
         tagRef.current,
         { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.9, delay: 0.15 }
+        { opacity: 1, y: 0, duration: 0.9 },
+        "-=1.2"
       );
 
       tl.fromTo(
         [title1Ref.current, title2Ref.current, title3Ref.current],
         { opacity: 0, y: 100, rotate: 1 },
         { opacity: 1, y: 0, rotate: 0, duration: 1.3, stagger: 0.12 },
-        "-=0.7"
+        "-=0.8"
       );
 
       tl.fromTo(
@@ -56,8 +66,19 @@ export default function Hero({ scrollToSection }: { scrollToSection: (id: string
     <div
       id="hero"
       ref={containerRef}
-      className="relative w-full min-h-screen lg:h-screen bg-[#f9f9f9] dark:bg-[#0a0a0a] pt-32 pb-20 flex flex-col justify-center overflow-hidden"
+      className="relative w-full h-screen bg-[#f9f9f9] dark:bg-[#0a0a0a] flex flex-col justify-center overflow-hidden z-10"
     >
+      {/* Cinematic Full-Bleed Background Image */}
+      <img
+        ref={bgRef}
+        src="/hero_bg.png"
+        alt="SEO Growth Agency Visual Backdrop"
+        className="absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-300 pointer-events-none select-none filter contrast-200 brightness-150"
+      />
+
+      {/* High-Contrast Tint Overlays for Perfect Readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#f9f9f9]/70 via-[#f9f9f9]/85 to-[#f9f9f9] dark:from-[#0a0a0a]/70 dark:via-[#0a0a0a]/85 dark:to-[#0a0a0a] z-0 pointer-events-none transition-colors duration-300"></div>
+
       {/* Editorial Decorative Grid Guidelines */}
       <div className="absolute inset-0 grid grid-cols-12 pointer-events-none opacity-[0.03] dark:opacity-[0.05] z-0">
         <div className="col-span-1 border-r border-[#1a1c1c] dark:border-white"></div>
@@ -84,7 +105,6 @@ export default function Hero({ scrollToSection }: { scrollToSection: (id: string
               GROWTH AGENCY
             </span>
             <span className="w-2.5 h-2.5 rounded-full bg-brand-lime animate-pulse"></span>
-
           </div>
 
           {/* Fluid responsive typography to scale and fit screens perfectly */}
@@ -96,7 +116,7 @@ export default function Hero({ scrollToSection }: { scrollToSection: (id: string
               ref={title2Ref}
               className="text-brand-aqua italic font-black select-none hover:text-brand-lime transition-colors duration-350 cursor-default"
             >
-              PROJECT
+              WEBSITE
             </span>
             <span ref={title3Ref} className="block hover:text-brand-aqua transition-colors duration-350 cursor-default">
               REVENUE

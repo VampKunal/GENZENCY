@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import ResultsBanner from "./components/ResultsBanner";
@@ -13,6 +13,14 @@ import Insights from "./components/Insights";
 import InteractiveCalculator from "./components/InteractiveCalculator";
 import Footer from "./components/Footer";
 
+// Smooth scrolling and animations integration
+import Lenis from "lenis";
+import Snap from "lenis/snap";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
 export default function App() {
   // Initialize dark mode state, defaulting to 'true' to fit the high-contrast premium mood
   const [darkMode, setDarkMode] = useState<boolean>(() => {
@@ -21,6 +29,7 @@ export default function App() {
   });
 
   const [activeSection, setActiveSection] = useState<string>("hero");
+  const lenisRef = useRef<Lenis | null>(null);
 
   // Sync dark mode class with DOM element
   useEffect(() => {
@@ -33,6 +42,53 @@ export default function App() {
       localStorage.setItem("theme", "light");
     }
   }, [darkMode]);
+
+  // Set up Lenis smooth scrolling and snapping
+  useEffect(() => {
+    // Instantiate Lenis smooth scroll on root window
+    const lenis = new Lenis({
+      syncTouch: true,
+      duration: 1.1,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    });
+
+    lenisRef.current = lenis;
+
+    // Connect ScrollTrigger updates with Lenis scroll events
+    lenis.on("scroll", ScrollTrigger.update);
+
+    // Sync GSAP ticker with Lenis requestAnimationFrame
+    const updateTicker = (time: number) => {
+      lenis.raf(time * 1000);
+    };
+    gsap.ticker.add(updateTicker);
+    gsap.ticker.lagSmoothing(0);
+
+    // Set up Lenis Scroll Snapping
+    const snap = new Snap(lenis, {
+      type: "proximity",
+      distanceThreshold: "25%",
+      debounce: 300,
+      duration: 0.85,
+      easing: (t) => 1 - Math.pow(1 - t, 4),
+    });
+
+    // Register snap targets
+    const targetIds = ["hero", "results", "work", "expertise", "insights", "estimation"];
+    const elements = targetIds
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    snap.addElements(elements, {
+      align: ["start", "start"],
+    });
+
+    return () => {
+      lenis.destroy();
+      snap.destroy();
+      gsap.ticker.remove(updateTicker);
+    };
+  }, []);
 
   // Track scroll position to update active navbar links dynamically
   useEffect(() => {
@@ -65,19 +121,26 @@ export default function App() {
     };
   }, []);
 
-  // Smooth click scroll anchor logic
+  // Smooth click scroll anchor logic using Lenis
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      // Calculate top padding adjustment because of sticky navbar
-      const navbarOffset = 90;
-      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-      const offsetPosition = elementPosition - navbarOffset;
+      if (lenisRef.current) {
+        lenisRef.current.scrollTo(element, {
+          offset: -90,
+          immediate: false,
+          duration: 1.2,
+        });
+      } else {
+        const navbarOffset = 90;
+        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = elementPosition - navbarOffset;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+      }
       setActiveSection(id);
     }
   };
