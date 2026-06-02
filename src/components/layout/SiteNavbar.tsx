@@ -12,7 +12,6 @@ import {
   X,
   ChevronDown,
   ArrowUpRight,
-  Phone,
 } from "lucide-react";
 import { useTheme } from "@/components/layout/ThemeProvider";
 import { CONTACT_HREF, NAV_MENUS, type NavMenu } from "@/lib/navigation";
@@ -48,31 +47,17 @@ export default function SiteNavbar() {
 
   return (
     <>
-      <div className="fixed top-0 right-0 left-0 z-[60] hidden border-b border-white/10 bg-[#0a0a0a]/95 px-4 py-1.5 text-[10px] text-white lg:block">
-        <div className="mx-auto flex max-w-7xl items-center justify-end gap-3 font-mono font-semibold tracking-wide">
-          <a href="tel:+919212521444" className="flex items-center gap-1 hover:text-brand-aqua">
-            <Phone size={11} /> +91-92125 21444
-          </a>
-          <span className="text-white/25">|</span>
-          <Link href={CONTACT_HREF} className="hover:text-brand-aqua">
-            Contact Us
-          </Link>
-        </div>
-      </div>
-
-      <header className="pointer-events-none fixed top-3 right-0 left-0 z-50 max-w-[100vw] sm:top-4 lg:top-9">
+      <header className="pointer-events-none fixed top-3 right-0 left-0 z-50 max-w-[100vw] sm:top-4">
         <div className="pointer-events-auto mx-auto max-w-7xl px-2 sm:px-4 lg:px-6">
           <nav
-            className={`max-w-full overflow-visible rounded-xl border transition-all duration-300 sm:rounded-2xl ${
-              scrolled
-                ? "glass-nav border-brand-gray/20 py-3 px-4 shadow-lg dark:border-white/10 sm:px-6"
-                : "border-brand-gray/5 bg-white/70 py-4 px-4 backdrop-blur-md dark:border-white/10 dark:bg-black/60 sm:px-6"
+            className={`max-w-full overflow-visible rounded-[1.15rem] border border-white/35 bg-white/55 shadow-[0_18px_55px_rgba(0,0,0,0.12)] ring-1 ring-white/35 backdrop-blur-2xl transition-all duration-300 dark:border-white/12 dark:bg-black/45 dark:ring-white/10 sm:rounded-2xl ${
+              scrolled ? "py-2.5 px-3 sm:px-5" : "py-3 px-3 sm:px-5"
             }`}
           >
             <div className="flex items-center justify-between gap-3">
               <Link
                 href="/"
-                className="min-w-0 shrink font-display text-lg font-black tracking-tighter text-brand-gray uppercase dark:text-brand-light sm:text-2xl"
+                className="min-w-0 shrink rounded-full bg-white/35 px-3 py-2 font-display text-lg font-black tracking-tighter text-brand-gray uppercase shadow-sm ring-1 ring-black/5 backdrop-blur-xl dark:bg-white/8 dark:text-brand-light dark:ring-white/10 sm:text-2xl"
               >
                 <span className="flex items-center gap-1">
                   <span className="truncate">GENZENCY</span>
@@ -92,29 +77,29 @@ export default function SiteNavbar() {
                 ))}
               </div>
 
-              <div className="hidden items-center gap-3 md:flex">
+              <div className="hidden items-center gap-3 xl:flex">
                 <button
                   type="button"
                   onClick={toggleDarkMode}
-                  className="cursor-pointer rounded-xl bg-brand-gray/10 p-2 text-brand-gray transition-all hover:bg-brand-aqua hover:text-black dark:bg-brand-light/10 dark:text-brand-light"
+                  className="cursor-pointer rounded-full bg-white/45 p-2 text-brand-gray shadow-sm ring-1 ring-black/5 backdrop-blur-xl transition-all hover:bg-brand-aqua hover:text-black dark:bg-white/10 dark:text-brand-light dark:ring-white/10"
                   aria-label="Toggle theme"
                 >
                   {darkMode ? <Sun size={18} /> : <Moon size={18} />}
                 </button>
                 <Link
                   href={CONTACT_HREF}
-                  className="group inline-flex items-center justify-center rounded-xl bg-brand-aqua px-5 py-2.5 font-display text-xs font-semibold tracking-wider text-black uppercase transition-colors hover:bg-brand-lime"
+                  className="group inline-flex items-center justify-center rounded-full bg-brand-aqua px-5 py-2.5 font-display text-xs font-semibold tracking-wider text-black uppercase shadow-[0_10px_30px_rgba(0,204,214,0.22)] transition-colors hover:bg-brand-lime"
                 >
                   Contact Us
                   <ArrowUpRight size={14} className="ml-1 transition-transform group-hover:rotate-45" />
                 </Link>
               </div>
 
-              <div className="flex items-center gap-2 md:hidden">
-                <button type="button" onClick={toggleDarkMode} className="rounded-xl p-2 text-brand-gray dark:text-white" aria-label="Toggle theme">
+              <div className="flex items-center gap-2 xl:hidden">
+                <button type="button" onClick={toggleDarkMode} className="rounded-full bg-white/45 p-2 text-brand-gray shadow-sm ring-1 ring-black/5 backdrop-blur-xl transition hover:bg-brand-aqua hover:text-black dark:bg-white/10 dark:text-white dark:ring-white/10" aria-label="Toggle theme">
                   {darkMode ? <Sun size={16} /> : <Moon size={16} />}
                 </button>
-                <button type="button" onClick={() => setMobileOpen(!mobileOpen)} className="rounded-xl p-2 text-brand-gray dark:text-white" aria-label="Menu">
+                <button type="button" onClick={() => setMobileOpen(!mobileOpen)} className="rounded-full bg-brand-gray p-2 text-white shadow-[0_10px_30px_rgba(0,0,0,0.2)] ring-1 ring-black/10 transition hover:bg-brand-aqua hover:text-black dark:bg-white dark:text-black" aria-label="Menu">
                   {mobileOpen ? <X size={20} /> : <Menu size={20} />}
                 </button>
               </div>
@@ -134,27 +119,29 @@ export default function SiteNavbar() {
         )}
 
       {mobileOpen && (
-        <div className="fixed inset-0 z-40 max-w-[100vw] overflow-x-hidden overflow-y-auto bg-white/95 px-5 pt-28 pb-10 backdrop-blur-2xl md:hidden dark:bg-[#0a0a0a]/98">
-          {NAV_MENUS.map((menu) => (
-            <div key={menu.id} className="mb-8 border-b border-brand-gray/10 pb-6 dark:border-white/10">
-              <p className="mb-3 font-mono text-[10px] font-bold tracking-widest text-brand-aqua uppercase">{menu.label}</p>
-              <ul className="space-y-3">
-                {menu.columns.flatMap((c) => c.links).map((link) => (
-                  <li key={link.href}>
-                    <Link href={link.href} className="block font-display text-2xl font-black text-brand-gray uppercase hover:text-brand-aqua sm:text-3xl dark:text-white">
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-          <Link
-            href={CONTACT_HREF}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-brand-aqua py-4 font-display text-sm font-black text-black uppercase"
-          >
-            Contact Us <ArrowUpRight size={16} />
-          </Link>
+        <div className="fixed inset-0 z-40 max-w-[100vw] overflow-x-hidden overflow-y-auto bg-black/20 px-3 pt-24 pb-6 backdrop-blur-xl xl:hidden dark:bg-black/55">
+          <div className="mx-auto max-w-2xl rounded-[1.5rem] border border-white/45 bg-white/72 p-4 shadow-[0_24px_80px_rgba(0,0,0,0.22)] ring-1 ring-white/40 backdrop-blur-2xl dark:border-white/12 dark:bg-[#080808]/72 dark:ring-white/10 sm:p-6">
+            {NAV_MENUS.map((menu) => (
+              <div key={menu.id} className="mb-6 border-b border-brand-gray/10 pb-5 last:border-b-0 dark:border-white/10">
+                <p className="mb-3 font-mono text-[10px] font-bold tracking-widest text-brand-aqua uppercase">{menu.label}</p>
+                <ul className="grid gap-2 sm:grid-cols-2">
+                  {menu.columns.flatMap((c) => c.links).map((link) => (
+                    <li key={link.href}>
+                      <Link href={link.href} className="block rounded-2xl bg-white/45 px-4 py-3 font-display text-base font-black text-brand-gray uppercase ring-1 ring-black/5 transition hover:bg-brand-aqua hover:text-black dark:bg-white/8 dark:text-white dark:ring-white/10 sm:text-lg">
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+            <Link
+              href={CONTACT_HREF}
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand-aqua py-4 font-display text-sm font-black text-black uppercase shadow-[0_18px_45px_rgba(0,204,214,0.25)] transition hover:bg-brand-lime"
+            >
+              Contact Us <ArrowUpRight size={16} />
+            </Link>
+          </div>
         </div>
       )}
     </>

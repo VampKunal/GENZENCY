@@ -54,17 +54,6 @@ export default function PageTemplate({ content }: { content: PageContent }) {
 
         <div className="relative z-10 mx-auto grid w-full max-w-7xl gap-8 lg:grid-cols-[minmax(0,1.08fr)_minmax(18rem,0.92fr)] lg:items-center">
           <div className="hero-stage relative min-w-0">
-            <div className="pointer-events-none absolute left-1/2 top-1/2 z-0 aspect-square w-[clamp(10rem,55vw,27rem)] -translate-x-1/2 -translate-y-1/2 rotate-[-4deg] opacity-80">
-              <Image
-                src="/cherry-blossom.png"
-                alt=""
-                fill
-                priority
-                sizes="(max-width: 768px) 70vw, 27rem"
-                className="object-contain"
-              />
-            </div>
-
             <div className="relative z-10">
               <span className="inline-flex max-w-full items-center gap-2 font-mono text-[0.68rem] font-bold tracking-widest text-brand-aqua uppercase sm:text-xs">
                 <span className="h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-[#ff4cb4]" />

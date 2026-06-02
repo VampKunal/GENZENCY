@@ -41,6 +41,22 @@ export default function Hero({ scrollToSection }: HeroProps) {
       ref={containerRef}
       className="hero-perspective relative z-10 flex min-h-[100dvh] w-full flex-col items-center justify-center overflow-hidden bg-[#f9f9f9] px-[clamp(0.75rem,3vw,1.5rem)] pt-[clamp(6.5rem,16vw,8rem)] pb-[clamp(2.5rem,6vw,4rem)] dark:bg-[#0a0a0a]"
     >
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden>
+        <div className="hero-neon-wash absolute inset-0" />
+        {Array.from({ length: 18 }).map((_, i) => (
+          <span
+            key={i}
+            className="sparkle-dot hero-sparkle-dot"
+            style={{
+              left: `${8 + ((i * 37) % 84)}%`,
+              top: `${12 + ((i * 23) % 72)}%`,
+              animationDelay: `${i * 0.22}s`,
+              animationDuration: `${2.4 + (i % 5) * 0.38}s`,
+            }}
+          />
+        ))}
+      </div>
+
       <div className="pointer-events-none absolute inset-0 z-0 grid grid-cols-12 opacity-[0.03] dark:opacity-[0.05]">
         {Array.from({ length: 11 }).map((_, i) => (
           <div key={i} className="col-span-1 border-r border-[#1a1c1c] dark:border-[#00ff88]" />
@@ -73,13 +89,14 @@ export default function Hero({ scrollToSection }: HeroProps) {
             </div>
           </div>
 
-          <span ref={title1Ref} className="hero-title-front relative z-20 block whitespace-nowrap will-change-transform">
+          <span data-gsap-hero ref={title1Ref} className="hero-title-front relative z-20 block whitespace-nowrap will-change-transform">
             SCALE YOUR
           </span>
 
           <div className="h-[clamp(0.35rem,1.8vw,1.1rem)]" aria-hidden />
 
           <span
+            data-gsap-hero
             ref={title2Ref}
             className="hero-title-front relative z-20 block whitespace-nowrap text-brand-gray will-change-transform dark:text-white"
           >
@@ -123,7 +140,7 @@ export default function Hero({ scrollToSection }: HeroProps) {
           </span>
         </h1>
 
-        <div className="relative z-30 mt-[clamp(2rem,5vw,4rem)] flex w-full max-w-[min(36rem,92vw)] flex-col items-center gap-[clamp(1rem,3vw,2rem)] px-[clamp(0.5rem,2vw,1rem)] text-center">
+        <div data-gsap-hero className="relative z-30 mt-[clamp(2rem,5vw,4rem)] flex w-full max-w-[min(36rem,92vw)] flex-col items-center gap-[clamp(1rem,3vw,2rem)] px-[clamp(0.5rem,2vw,1rem)] text-center">
           <p
             className="max-w-lg font-sans font-semibold leading-relaxed text-brand-gray/80 dark:text-emerald-100/90"
             style={{ fontSize: "clamp(0.8125rem, 2.8vw, 1.125rem)" }}
