@@ -1,14 +1,7 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
+"use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { TrendingUp, Clock, Mail, Globe, ArrowRight, ShieldCheck } from "lucide-react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function InteractiveCalculator() {
   const [currentTraffic, setCurrentTraffic] = useState<number>(3500);
@@ -19,63 +12,12 @@ export default function InteractiveCalculator() {
   const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
   const [errorWord, setErrorWord] = useState<string>("");
 
-  const containerRef = useRef<HTMLDivElement>(null);
-
   // Math estimates to simulate SEO benefits dynamically
   const multiplierIndustry = sector === "luxury-apparel" ? 3.5 : sector === "b2b-saas" ? 5.2 : sector === "avant-garde-media" ? 4.1 : 3.0;
   const multiplierObjective = objective === "ambitious" ? 1.5 : objective === "radical" ? 2.5 : 4.0;
 
   const estimatedTrafficBoost = Math.round(currentTraffic * multiplierIndustry * multiplierObjective / 10) * 10;
   const estimatedRevenueLift = Math.round(estimatedTrafficBoost * 3.15);
-
-  // States to hold animated values
-  const [displayTraffic, setDisplayTraffic] = useState<number>(estimatedTrafficBoost);
-  const [displayRevenue, setDisplayRevenue] = useState<number>(estimatedRevenueLift);
-
-  // GSAP tween for counting numbers smoothly
-  const prevTraffic = useRef<number>(estimatedTrafficBoost);
-  const prevRevenue = useRef<number>(estimatedRevenueLift);
-
-  useEffect(() => {
-    const counterObj = { traffic: prevTraffic.current, revenue: prevRevenue.current };
-    gsap.to(counterObj, {
-      traffic: estimatedTrafficBoost,
-      revenue: estimatedRevenueLift,
-      duration: 0.6,
-      ease: "power2.out",
-      onUpdate: () => {
-        setDisplayTraffic(Math.round(counterObj.traffic));
-        setDisplayRevenue(Math.round(counterObj.revenue));
-      }
-    });
-    prevTraffic.current = estimatedTrafficBoost;
-    prevRevenue.current = estimatedRevenueLift;
-  }, [estimatedTrafficBoost, estimatedRevenueLift]);
-
-  // GSAP ScrollTrigger for entrance animation
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const panels = containerRef.current?.querySelectorAll(".gsap-calc-panel");
-      if (panels && panels.length > 0) {
-        gsap.fromTo(
-          panels,
-          { opacity: 0, y: 50 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            stagger: 0.2,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top 80%",
-            },
-          }
-        );
-      }
-    }, containerRef);
-    return () => ctx.revert();
-  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -94,8 +36,7 @@ export default function InteractiveCalculator() {
   return (
     <section
       id="estimation"
-      ref={containerRef}
-      className="py-24 bg-[#f9f9f9] text-brand-gray dark:bg-[#0a0a0a] dark:text-white transition-colors duration-300 overflow-hidden relative z-10 border-t border-brand-aqua/15 select-none"
+      className="relative z-10 overflow-hidden border-t border-brand-aqua/15 bg-[#f9f9f9] py-24 text-brand-gray select-none transition-colors duration-300 dark:bg-[#0a0a0a] dark:text-white"
     >
       
       {/* Decorative vector dots floating */}
@@ -122,7 +63,7 @@ export default function InteractiveCalculator() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
           
           {/* SLIDERS COLUMN: System inputs */}
-          <div className="col-span-12 lg:col-span-7 gsap-calc-panel bg-white dark:bg-[#111111] p-5 sm:p-8 md:p-10 border-2 sm:border-4 border-brand-gray/10 dark:border-brand-gray/50 rounded-3xl space-y-8 flex flex-col justify-between transition-colors duration-300">
+          <div className="col-span-12 lg:col-span-7 bg-white dark:bg-[#111111] p-5 sm:p-8 md:p-10 border-2 sm:border-4 border-brand-gray/10 dark:border-brand-gray/50 rounded-3xl space-y-8 flex flex-col justify-between transition-colors duration-300">
             <div className="space-y-6">
               
               {/* Traffic Input Header */}
@@ -221,7 +162,7 @@ export default function InteractiveCalculator() {
           </div>
 
           {/* RESULTS COLUMN: Visual outputs & Inquiry Form */}
-          <div className="col-span-12 lg:col-span-5 gsap-calc-panel flex flex-col justify-between bg-white dark:bg-[#111111] text-brand-gray dark:text-white p-5 sm:p-8 md:p-10 border-2 sm:border-4 border-brand-gray/10 dark:border-white/10 rounded-3xl shadow-2xl relative overflow-hidden transition-colors duration-300">
+          <div className="col-span-12 lg:col-span-5 flex flex-col justify-between bg-white dark:bg-[#111111] text-brand-gray dark:text-white p-5 sm:p-8 md:p-10 border-2 sm:border-4 border-brand-gray/10 dark:border-white/10 rounded-3xl shadow-2xl relative overflow-hidden transition-colors duration-300">
             
             {/* Visual Header */}
             <div>
@@ -238,7 +179,7 @@ export default function InteractiveCalculator() {
                   </span>
                   <div className="flex flex-wrap items-baseline gap-2">
                     <span className="font-display text-3xl sm:text-5xl font-black text-brand-aqua">
-                      +{displayTraffic.toLocaleString()}
+                      +{estimatedTrafficBoost.toLocaleString()}
                     </span>
                     <span className="font-mono text-xs text-brand-gray/50 dark:text-white/50 uppercase font-semibold">visitors /mo</span>
                   </div>
@@ -250,7 +191,7 @@ export default function InteractiveCalculator() {
                   </span>
                   <div className="flex flex-wrap items-baseline gap-1">
                     <span className="font-display text-2xl sm:text-4xl font-extrabold text-brand-gray dark:text-white">
-                      +${displayRevenue.toLocaleString()}
+                      +${estimatedRevenueLift.toLocaleString()}
                     </span>
                     <span className="font-mono text-[10px] text-brand-gray/50 dark:text-white/50 uppercase font-black">est. value /mo</span>
                   </div>

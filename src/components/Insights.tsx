@@ -1,23 +1,13 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
+"use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Clock, X, ChevronRight, ArrowUpRight } from "lucide-react";
-import { EditorialInsight } from "../types";
-import { insights } from "../data";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+import { EditorialInsight } from "@/types";
+import { insights } from "@/data";
 
 export default function Insights() {
   const [selectedArticle, setSelectedArticle] = useState<EditorialInsight | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>("ALL");
-  const containerRef = useRef<HTMLDivElement>(null);
-  const modalContentRef = useRef<HTMLDivElement>(null);
-  const modalBackdropRef = useRef<HTMLDivElement>(null);
 
   const categories = ["ALL", "SEO OPTIMIZATION", "PAID MARKETING", "UI-UX DESIGN"];
 
@@ -25,78 +15,16 @@ export default function Insights() {
     ? insights
     : insights.filter(art => art.category === activeCategory);
 
-  // GSAP scroll trigger to reveal articles
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const items = containerRef.current?.querySelectorAll(".gsap-insight-item");
-      if (items && items.length > 0) {
-        gsap.fromTo(
-          items,
-          { opacity: 0, y: 40 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            stagger: 0.15,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top 80%",
-            },
-          }
-        );
-      }
-    }, containerRef);
-    return () => ctx.revert();
-  }, [activeCategory]); // Re-run if category filters list changes
-
-  // Modal active lock
-  useEffect(() => {
-    if (selectedArticle) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = selectedArticle ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
   }, [selectedArticle]);
 
-  // Modal animation
-  useEffect(() => {
-    if (selectedArticle && modalContentRef.current && modalBackdropRef.current) {
-      gsap.fromTo(
-        modalBackdropRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.3 }
-      );
-      gsap.fromTo(
-        modalContentRef.current,
-        { scale: 0.95, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.2)" }
-      );
-    }
-  }, [selectedArticle]);
-
-  const handleCloseModal = () => {
-    if (modalContentRef.current && modalBackdropRef.current) {
-      gsap.to(modalBackdropRef.current, { opacity: 0, duration: 0.25 });
-      gsap.to(modalContentRef.current, {
-        scale: 0.95,
-        opacity: 0,
-        duration: 0.35,
-        ease: "power2.in",
-        onComplete: () => setSelectedArticle(null),
-      });
-    } else {
-      setSelectedArticle(null);
-    }
-  };
-
   return (
     <section
       id="insights"
-      ref={containerRef}
       className="py-24 bg-[#f9f9f9] dark:bg-[#0a0a0a] border-t border-brand-gray/10 dark:border-white/10 relative z-10 select-none"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -133,7 +61,7 @@ export default function Insights() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
           {/* Main Huge Cover Column (Left 7 cols) on first item */}
-          <div className="col-span-12 lg:col-span-7 group cursor-pointer gsap-insight-item" onClick={() => setSelectedArticle(filteredArticles[0] || null)}>
+          <div className="col-span-12 lg:col-span-7 group cursor-pointer" onClick={() => setSelectedArticle(filteredArticles[0] || null)}>
             {filteredArticles[0] ? (
               <div className="space-y-6 bg-white dark:bg-[#0c0c0c] border-2 sm:border-4 border-brand-gray dark:border-white p-5 sm:p-8 rounded-3xl shadow-lg hover:shadow-brand-aqua/5 transition-all">
                 <div className="aspect-video rounded-2xl overflow-hidden relative bg-[#111] border border-brand-gray/10 dark:border-white/10">
@@ -200,7 +128,7 @@ export default function Insights() {
               <div
                 key={art.id}
                 onClick={() => setSelectedArticle(art)}
-                className="bg-white dark:bg-[#0c0c0c] border-2 sm:border-4 border-transparent hover:border-brand-aqua/30 p-5 sm:p-6 rounded-2xl flex flex-col justify-between shadow transition-all cursor-pointer group gsap-insight-item"
+                className="bg-white dark:bg-[#0c0c0c] border-2 sm:border-4 border-transparent hover:border-brand-aqua/30 p-5 sm:p-6 rounded-2xl flex flex-col justify-between shadow transition-all cursor-pointer group"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between font-mono text-[10px] text-brand-gray/50 dark:text-white/40">
@@ -235,7 +163,7 @@ export default function Insights() {
             ))}
 
             {/* Micro Newsletter Strip */}
-            <div className="bg-brand-lime text-black p-5 sm:p-6 rounded-3xl space-y-4 shadow-lg gsap-insight-item">
+            <div className="bg-brand-lime text-black p-5 sm:p-6 rounded-3xl space-y-4 shadow-lg">
               <span className="font-mono text-[10px] font-bold tracking-widest bg-black text-brand-lime px-2 py-0.5 rounded uppercase">
                 GROWTH SYNDICATE
               </span>
@@ -261,16 +189,12 @@ export default function Insights() {
         {/* Dynamic Lightbox for Article Reads */}
         {selectedArticle && (
           <div
-            ref={modalBackdropRef}
             id="article-read-modal"
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
           >
-            <div className="absolute inset-0" onClick={handleCloseModal}></div>
+            <div className="absolute inset-0" onClick={() => setSelectedArticle(null)} aria-hidden />
 
-            <div
-              ref={modalContentRef}
-              className="w-full max-w-2xl bg-white dark:bg-[#0c0c0c] text-brand-gray dark:text-brand-light h-[85vh] rounded-3xl relative z-10 flex flex-col overflow-hidden border-2 sm:border-4 border-brand-gray dark:border-white shadow-2xl"
-            >
+            <div className="relative z-10 flex h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-3xl border-2 border-brand-gray bg-white text-brand-gray shadow-2xl sm:border-4 dark:border-white dark:bg-[#0c0c0c] dark:text-brand-light">
               {/* Header */}
               <div className="p-4 sm:p-5 border-b border-brand-gray/10 dark:border-white/10 flex items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -280,7 +204,7 @@ export default function Insights() {
                   </span>
                 </div>
                 <button
-                  onClick={handleCloseModal}
+                  onClick={() => setSelectedArticle(null)}
                   className="p-1 rounded-full bg-brand-gray/10 dark:bg-white/10 hover:bg-brand-aqua hover:text-black transition-colors cursor-pointer"
                 >
                   <X size={18} />
@@ -363,7 +287,7 @@ export default function Insights() {
               <div className="p-4 sm:p-5 border-t border-brand-gray/10 dark:border-white/10 flex items-center justify-between bg-brand-gray/5 dark:bg-white/5 shrink-0">
                 <span className="font-mono text-[10px] text-brand-gray/40 dark:text-white/40 uppercase">✓ GUIDANCE CONTENT</span>
                 <button
-                  onClick={handleCloseModal}
+                  onClick={() => setSelectedArticle(null)}
                   className="bg-brand-gray dark:bg-white text-white dark:text-black font-display font-semibold text-xs tracking-wider uppercase py-3 px-6 rounded-xl hover:bg-brand-aqua dark:hover:bg-brand-aqua hover:text-black dark:hover:text-black transition-all cursor-pointer shadow-md"
                 >
                   CLOSE ARTICLE

@@ -1,8 +1,3 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
 import { CaseStudy, ServiceDetail, EditorialInsight } from "./types";
 
 export const caseStudies: CaseStudy[] = [

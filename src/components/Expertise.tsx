@@ -1,46 +1,13 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
+"use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { Compass, Cpu, FileText, Search, Activity, Zap, Shield, CheckCircle } from "lucide-react";
-import { services } from "../data";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+import { services } from "@/data";
 
 export default function Expertise() {
   const [activeTab, setActiveTab] = useState<string>("seo-optimization");
   const [speedScore, setSpeedScore] = useState<number>(45);
   const [optimizing, setOptimizing] = useState<boolean>(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  // GSAP scroll triggered entry for the bento items
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const panels = containerRef.current?.querySelectorAll(".gsap-bento-panel");
-      if (panels && panels.length > 0) {
-        gsap.fromTo(
-          panels,
-          { opacity: 0, y: 40 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            stagger: 0.15,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top 80%",
-            },
-          }
-        );
-      }
-    }, containerRef);
-    return () => ctx.revert();
-  }, []);
 
   const handleOptimizationPress = () => {
     if (optimizing) return;
@@ -78,8 +45,7 @@ export default function Expertise() {
   return (
     <section
       id="expertise"
-      ref={containerRef}
-      className="py-24 bg-[#f3f3f4] dark:bg-[#060606] text-brand-gray dark:text-brand-light relative z-10 overflow-hidden"
+      className="relative z-10 overflow-hidden bg-[#f3f3f4] py-24 text-brand-gray dark:bg-[#060606] dark:text-brand-light"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         
@@ -100,7 +66,7 @@ export default function Expertise() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
           {/* LEFT PANEL: Interactive Navigators List (5 cols) */}
-          <div className="col-span-12 lg:col-span-5 flex flex-col gap-4 gsap-bento-panel">
+          <div className="col-span-12 lg:col-span-5 flex flex-col gap-4">
             <span className="font-mono text-[10px] uppercase font-bold tracking-widest text-[#1a1c1c]/50 dark:text-white/40 mb-1 block">
               CHOOSE FIELD //
             </span>
@@ -135,7 +101,7 @@ export default function Expertise() {
           </div>
 
           {/* RIGHT PANEL: Immersive Details Sandbox Viewer (7 cols) */}
-          <div className="col-span-12 lg:col-span-7 gsap-bento-panel bg-white dark:bg-[#0c0c0c] border-2 sm:border-4 border-brand-gray dark:border-white rounded-3xl p-5 sm:p-8 md:p-10 flex flex-col justify-between shadow-xl relative overflow-hidden">
+          <div className="col-span-12 lg:col-span-7 bg-white dark:bg-[#0c0c0c] border-2 sm:border-4 border-brand-gray dark:border-white rounded-3xl p-5 sm:p-8 md:p-10 flex flex-col justify-between shadow-xl relative overflow-hidden">
             
             {/* Live sandbox animation backdrop gradient hint */}
             <div className="absolute top-0 right-0 w-80 h-80 bg-brand-orange/5 rounded-full filter blur-3xl pointer-events-none"></div>
