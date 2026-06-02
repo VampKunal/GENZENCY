@@ -64,7 +64,7 @@ export const SOLUTION_PAGES: Record<string, PageContent> = {
     heroTitle: "FIX THE FOUNDATION. SCALE ORGANIC TRAFFIC.",
     heroSubtitle: "Crawl budget, indexation, structured data, and performance tuning—so content can actually rank.",
     heroImage: unsplash("photo-1558494949-ef010cbdcc31"),
-    scrollMode: "scroll-horizontal",
+    scrollMode: "stack",
     sections: [
       {
         eyebrow: "01 // AUDIT",
@@ -95,7 +95,7 @@ export const SOLUTION_PAGES: Record<string, PageContent> = {
     heroTitle: "PAID MEDIA THAT FEEDS ORGANIC MOMENTUM",
     heroSubtitle: "Creative, audiences, and landing experiences tuned for ROAS—while SEO builds long-term equity.",
     heroImage: unsplash("photo-1611162616305-c69b3fa7fbe0"),
-    scrollMode: "scroll-horizontal",
+    scrollMode: "stack",
     sections: [
       {
         eyebrow: "01 // CREATIVE",
@@ -129,7 +129,7 @@ export const ABOUT_PAGES: Record<string, PageContent> = {
     heroTitle: "A CLEAR PATH FROM AUDIT TO PAGE ONE",
     heroSubtitle: "No black boxes—structured sprints, transparent reporting, and decisions backed by search data.",
     heroImage: unsplash("photo-1522071820081-009f0129c71c"),
-    scrollMode: "reveal",
+    scrollMode: "stack",
     sections: [
       {
         eyebrow: "01 // DISCOVER",
@@ -159,7 +159,7 @@ export const ABOUT_PAGES: Record<string, PageContent> = {
     heroTitle: "RESULTS OUR CLIENTS TALK ABOUT",
     heroSubtitle: "Founders and marketing leads who needed rankings, speed, and revenue—and got all three.",
     heroImage: unsplash("photo-1573496359142-b8d87734a5a2"),
-    scrollMode: "grid",
+    scrollMode: "stack",
     sections: [
       {
         eyebrow: "KUDOS APPAREL",
@@ -222,7 +222,7 @@ export const PLAN_PAGES: Record<string, PageContent> = {
     heroTitle: "SEO RETAINERS THAT MATCH YOUR STAGE",
     heroSubtitle: "From local service brands to national ecommerce—scoped by goals, not arbitrary hours.",
     heroImage: unsplash("photo-1556761175-5973dc0f32e7"),
-    scrollMode: "grid",
+    scrollMode: "stack",
     sections: [
       {
         eyebrow: "STARTER",
@@ -251,8 +251,8 @@ export const PLAN_PAGES: Record<string, PageContent> = {
     heroTag: "// REDESIGN PLANS",
     heroTitle: "REDESIGN WITHOUT LOSING RANKINGS",
     heroSubtitle: "Migration playbooks, wireframes, and launch QA so relaunches grow traffic—not kill it.",
-    heroImage: unsplash("photo-1499951365837-a3c205c2746f"),
-    scrollMode: "reveal",
+    heroImage: unsplash("photo-1498050108023-c5249f4df085"),
+    scrollMode: "stack",
     sections: [
       {
         eyebrow: "DISCOVERY",
@@ -281,7 +281,7 @@ export const PLAN_PAGES: Record<string, PageContent> = {
     heroTitle: "SOCIAL PACKAGES BUILT FOR ROAS",
     heroSubtitle: "Creative production, campaign management, and landing pages in one plan.",
     heroImage: unsplash("photo-1611162616305-c69b3fa7fbe0"),
-    scrollMode: "scroll-horizontal",
+    scrollMode: "stack",
     sections: [
       {
         eyebrow: "TEST",
@@ -309,8 +309,8 @@ export const PLAN_PAGES: Record<string, PageContent> = {
     heroTag: "// ECOMMERCE SEO",
     heroTitle: "PRODUCT & CATEGORY SEO AT SCALE",
     heroSubtitle: "Templates, faceted navigation, and feed optimization for Shopify, WooCommerce, and custom stores.",
-    heroImage: unsplash("photo-1472851294608-062f824d6963"),
-    scrollMode: "reveal",
+    heroImage: unsplash("photo-1556742049-0cfed4f6a45d"),
+    scrollMode: "stack",
     sections: [
       {
         eyebrow: "CATALOG",
@@ -342,7 +342,7 @@ export const RESOURCE_PAGES: Record<string, PageContent> = {
     heroTitle: "SEO INSIGHTS THAT SHIP",
     heroSubtitle: "Actionable posts from practitioners—not generic AI filler.",
     heroImage: unsplash("photo-1499750310107-5fef28a66643"),
-    scrollMode: "grid",
+    scrollMode: "stack",
     sections: [
       {
         eyebrow: "WORDPRESS",
@@ -371,7 +371,7 @@ export const RESOURCE_PAGES: Record<string, PageContent> = {
     heroTitle: "STAY AHEAD OF SEARCH SHIFTS",
     heroSubtitle: "Short briefs on updates, SERP changes, and what to do this month.",
     heroImage: unsplash("photo-1451187580459-43490279c0fa"),
-    scrollMode: "scroll-horizontal",
+    scrollMode: "stack",
     sections: [
       {
         eyebrow: "SERP",

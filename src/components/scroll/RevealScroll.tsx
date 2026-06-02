@@ -36,6 +36,7 @@ export default function RevealScroll({ sections }: { sections: StackSection[] })
           key={`${section.eyebrow}-${index}`}
           data-reveal
           className={`reveal-section relative border-t border-brand-gray/10 ${SCREEN_SECTION} dark:border-white/10`}
+          style={{ transitionDelay: `${index * 0.12}s` }}
         >
           <PageSparkleBg variant="subtle" />
           <SectionPanel section={section} />

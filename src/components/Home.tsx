@@ -16,13 +16,15 @@ export default function Home() {
   };
 
   return (
-    <div className="relative max-w-[100vw] overflow-x-hidden bg-[#f9f9f9] text-brand-gray dark:bg-[#0a0a0a] dark:text-[#f9f9f9]">
+    <div className="page-enter relative max-w-[100vw] overflow-x-hidden bg-[#f9f9f9] text-brand-gray dark:bg-[#0a0a0a] dark:text-[#f9f9f9]">
       <Hero scrollToSection={scrollToSection} />
+      <div className="page-enter-body">
       <ResultsBanner />
       <Work />
       <Expertise />
       <Insights />
       <InteractiveCalculator />
+      </div>
     </div>
   );
 }

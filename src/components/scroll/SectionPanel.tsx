@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import type { StackSection } from "@/content/pages";
 import { sectionSurface } from "@/lib/section-theme";
@@ -5,13 +7,19 @@ import { sectionSurface } from "@/lib/section-theme";
 export default function SectionPanel({
   section,
   compact = false,
+  animate = false,
 }: {
   section: StackSection;
   compact?: boolean;
+  animate?: boolean;
 }) {
   return (
     <div className={`relative h-full w-full overflow-hidden ${sectionSurface(section.accent)}`}>
-      <div className="relative z-10 flex h-full max-h-full flex-col justify-center gap-4 overflow-hidden px-4 py-16 sm:px-8 sm:py-20">
+      <div
+        className={`relative z-10 flex h-full max-h-full flex-col justify-center overflow-hidden px-4 py-14 sm:px-8 sm:py-16 ${
+          animate ? "slide-content-enter" : ""
+        }`}
+      >
         <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 lg:flex-row lg:items-center lg:gap-8">
           <div className="min-w-0 flex-1 space-y-3">
             <span className="font-mono text-[10px] font-bold tracking-widest text-brand-aqua uppercase sm:text-xs">
@@ -39,8 +47,14 @@ export default function SectionPanel({
             )}
           </div>
           {section.image && (
-            <div className="relative mx-auto h-[min(28vh,200px)] w-full max-w-sm shrink-0 overflow-hidden rounded-xl border-2 border-brand-gray/10 dark:border-white/10 sm:h-[min(32vh,260px)] lg:mx-0 lg:h-[min(36vh,300px)] lg:max-w-xs lg:flex-1">
-              <Image src={section.image} alt="" fill className="object-cover" sizes="(max-width:768px) 90vw, 320px" />
+            <div className="relative mx-auto h-[min(26vh,190px)] w-full max-w-sm shrink-0 overflow-hidden rounded-xl border-2 border-brand-gray/10 dark:border-white/10 sm:h-[min(30vh,240px)] lg:mx-0 lg:h-[min(34vh,280px)] lg:max-w-xs lg:flex-1">
+              <Image
+                src={section.image}
+                alt=""
+                fill
+                className="object-cover"
+                sizes="(max-width:768px) 90vw, 320px"
+              />
             </div>
           )}
         </div>
