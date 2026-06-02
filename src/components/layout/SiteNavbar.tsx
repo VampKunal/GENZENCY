@@ -57,12 +57,16 @@ export default function SiteNavbar() {
             <div className="flex items-center justify-between gap-3">
               <Link
                 href="/"
-                className="min-w-0 shrink rounded-full bg-white/35 px-3 py-2 font-display text-lg font-black tracking-tighter text-brand-gray uppercase shadow-sm ring-1 ring-black/5 backdrop-blur-xl dark:bg-white/8 dark:text-brand-light dark:ring-white/10 sm:text-2xl"
+                className="flex items-center text-brand-gray dark:text-brand-light transition-opacity hover:opacity-90 shrink-0"
               >
-                <span className="flex items-center gap-1">
-                  <span className="truncate">GENZENCY</span>
-                  <span className="inline-block h-2 w-2 shrink-0 bg-brand-aqua sm:h-2.5 sm:w-2.5" />
-                </span>
+                <Image
+                  src="/logo-2.png"
+                  alt="GENZENCY Logo"
+                  width={210}
+                  height={42}
+                  className="h-10 w-auto object-contain dark:invert"
+                  priority
+                />
               </Link>
 
               <div className="hidden min-w-0 items-center gap-0.5 xl:flex">

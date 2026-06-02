@@ -81,12 +81,12 @@ export default function GsapSiteMotion() {
             observer.unobserve(entry.target);
             gsap.fromTo(
               entry.target,
-              { autoAlpha: 0, y: 46 },
-              { autoAlpha: 1, y: 0, duration: 0.82, ease: "power3.out" }
+              { autoAlpha: 0, y: 25 },
+              { autoAlpha: 1, y: 0, duration: 1.1, ease: "power2.out" }
             );
           });
         },
-        { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+        { threshold: 0.05, rootMargin: "0px 0px -5% 0px" }
       );
 
       revealItems.forEach((item) => observer.observe(item));

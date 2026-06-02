@@ -58,21 +58,23 @@ export default function ScrollPresentation({
         const slidePos = pos - i;
 
         if (slidePos >= 1) {
-          el.style.transform = "translate3d(-10%, 0, 0) scale(0.92)";
+          el.style.transform = "translate3d(-5%, 0, 0) scale(0.95)";
           el.style.opacity = "0";
           el.style.visibility = "hidden";
         } else if (slidePos >= 0) {
           el.style.visibility = "visible";
-          const enter = Math.min(1, slidePos / 0.22);
+          const enter = Math.min(1, slidePos / 0.35); // longer window for smooth transitions
           if (enter < 1) {
-            el.style.transform = `translate3d(${(1 - enter) * 105}%, 0, 0) scale(${0.94 + enter * 0.06})`;
+            // cubic ease-out calculation for translation
+            const eased = 1 - Math.pow(1 - enter, 3);
+            el.style.transform = `translate3d(${(1 - eased) * 100}%, 0, 0) scale(${0.96 + eased * 0.04})`;
             el.style.opacity = `${enter}`;
           } else {
             el.style.transform = "translate3d(0, 0, 0) scale(1)";
             el.style.opacity = "1";
           }
         } else {
-          el.style.transform = "translate3d(105%, 0, 0) scale(0.94)";
+          el.style.transform = "translate3d(100%, 0, 0) scale(0.96)";
           el.style.opacity = "0";
           el.style.visibility = "hidden";
         }

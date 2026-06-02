@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUp, Instagram, Github } from "lucide-react";
 
 export default function SiteFooter() {
@@ -9,8 +10,14 @@ export default function SiteFooter() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="flex flex-col items-center justify-between gap-5 border-b border-brand-gray/10 pb-6 text-center sm:flex-row sm:text-left dark:border-white/10">
           <div>
-            <Link href="/" className="font-display text-3xl font-black tracking-tighter uppercase transition-colors hover:text-brand-aqua sm:text-4xl">
-              GENZENCY
+            <Link href="/" className="inline-block text-brand-gray dark:text-white transition-opacity hover:opacity-90">
+              <Image
+                src="/logo-2.png"
+                alt="GENZENCY Logo"
+                width={170}
+                height={34}
+                className="h-8 w-auto object-contain dark:invert"
+              />
             </Link>
             <p className="mt-1 font-mono text-[10px] font-bold tracking-widest text-brand-gray/45 uppercase dark:text-white/40">
               © {new Date().getFullYear()} All rights reserved

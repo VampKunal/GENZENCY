@@ -25,6 +25,14 @@ export const metadata: Metadata = {
   title: "GENZENCY — Premium SEO & Digital Growth Agency",
   description:
     "GENZENCY — Premium editorial SEO and digital growth agency fusing raw brutalist impact with high-fashion precision.",
+  icons: {
+    icon: [
+      { url: "/favi.png", sizes: "32x32", type: "image/png" },
+      { url: "/favi.png", sizes: "192x192", type: "image/png" },
+      { url: "/favi.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: "/favi.png",
+  },
 };
 
 export default function RootLayout({
